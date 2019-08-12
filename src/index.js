@@ -9,7 +9,7 @@ import {
 
 import * as serviceWorker from './serviceWorker';
 import store from './store';
-import Cart from './containers/Cart';
+import Transactions from './containers/Transactions';
 
 import './assets/styles/index.css';
 
@@ -17,8 +17,11 @@ ReactDOM.render(
   <div id="app" className="app">
     <Provider store={store}>
       <Router>
-        <Route exact path="/cart" component={Cart} />
-        <Redirect from="/" to="/cart" />
+        <Route exact path="/settings" component={Settings}>
+          <Route path="/categories" component={Categories} />
+        </Route>
+        <Route exact path="/transactions" component={Transactions} />
+        <Redirect from="/" to="/transactions" />
       </Router>
     </Provider>
   </div>, document.getElementById('root'),

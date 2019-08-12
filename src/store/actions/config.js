@@ -9,6 +9,9 @@ export const configActionTypes = {
 
 const dataTypes = {
   currency: 'currency',
+  icons: 'icons',
+  colors: 'colors',
+  categoryTypes: 'categoryTypes',
 };
 
 // Action creators
@@ -32,6 +35,39 @@ export const getCurrency = () => async (dispatch) => {
     const currency = await ConfigService.getCurrency();
 
     dispatch(updateConfig(dataTypes.currency, currency));
+  } catch (e) {
+    dispatch(endLoading());
+  }
+};
+
+export const getIcons = () => async (dispatch) => {
+  try {
+    dispatch(startLoading());
+    const icons = await ConfigService.getIcons();
+
+    dispatch(updateConfig(dataTypes.icons, icons));
+  } catch (e) {
+    dispatch(endLoading());
+  }
+};
+
+export const getColors = () => async (dispatch) => {
+  try {
+    dispatch(startLoading());
+    const colors = await ConfigService.getColors();
+
+    dispatch(updateConfig(dataTypes.colors, colors));
+  } catch (e) {
+    dispatch(endLoading());
+  }
+};
+
+export const getCategoryTypes = () => async (dispatch) => {
+  try {
+    dispatch(startLoading());
+    const categoryTypes = await ConfigService.getCategoryTypes();
+
+    dispatch(updateConfig(dataTypes.categoryTypes, categoryTypes));
   } catch (e) {
     dispatch(endLoading());
   }

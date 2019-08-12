@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 
-import { getCurrency } from '../store/actions/config';
+import {
+  getCategoryTypes,
+  getColors,
+  getCurrency,
+  getIcons,
+} from '../store/actions/config';
 import store from '../store';
 
 export default function useAsyncProducts() {
@@ -9,6 +14,9 @@ export default function useAsyncProducts() {
 
   async function fetchTransactions() {
     await dispatch(getCurrency());
+    await dispatch(getIcons());
+    await dispatch(getColors());
+    await dispatch(getCategoryTypes());
     setIsLoaded(true);
   }
 

@@ -2,7 +2,10 @@ import { configActionTypes } from '../actions/config';
 
 const initialState = {
   isLoaded: false,
-  currency: {},
+  currency: [],
+  icons: [],
+  colors: [],
+  categoryTypes: [],
 };
 
 export default (state = initialState, action) => {

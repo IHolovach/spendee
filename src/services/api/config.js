@@ -9,4 +9,28 @@ export default class ConfigService {
       return err;
     }
   }
+
+  static async getIcons() {
+    try {
+      return await getRequest(Config.api.icons);
+    } catch (err) {
+      return err;
+    }
+  }
+
+  static async getColors() {
+    try {
+      return await getRequest(Config.api.colors);
+    } catch (err) {
+      return err;
+    }
+  }
+
+  static async getCategoryTypes() {
+    try {
+      return await getRequest(Config.api.categoryTypes);
+    } catch (err) {
+      return err;
+    }
+  }
 }

@@ -148,11 +148,64 @@
     }
   ],
   "transactions": [],
-  "currency": {
-    "UAH": "Ukrainian hryvnia",
-    "USD": "United State dollar",
-    "RUB": "Russian ruble",
-    "EUR": "European euro",
-    "PLN": "Polish zloty"
-  }
+  "currency": [
+    {
+      "id": "UAH",
+      "name": "Ukrainian hryvnia"
+    },
+    {
+      "id": "USD",
+      "name": "United State dollar"
+    },
+    {
+      "id": "RUB",
+      "name": "Russian ruble"
+    },
+    {
+      "id": "EUR",
+      "name": "European euro"
+    },
+    {
+      "id": "PLN",
+      "name": "Polish zloty"
+    }
+  ],
+  "icons": [
+    {
+      "id": 3213,
+      "icon": "flower"
+    },
+    {
+      "id": 3214,
+      "icon": "car"
+    },
+    {
+      "id": 3215,
+      "icon": "house"
+    }
+  ],
+  "colors": [
+    {
+      "id": 8213,
+      "color": "#fea800"
+    },
+    {
+      "id": 8214,
+      "color": "#5ec4ac"
+    },
+    {
+      "id": 8215,
+      "color": "#f6534c"
+    }
+  ],
+  "categoryType": [
+    {
+      "id": "1",
+      "name": "Income"
+    },
+    {
+      "id": "2",
+      "name": "Expense"
+    }
+  ]
 }

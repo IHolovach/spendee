@@ -1,33 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Icon from '../Icon';
+
 import './style.css';
 
-const SelectSku = ({
+const SelectIcon = ({
   className,
-  product,
-  options,
+  icons,
+  typeId,
   onChange,
 }) => {
-  const isSkuExists = !!options.length;
+  const isIconExists = !!icons.length;
+  const defaultValue = Object.keys(icons)[0].id;
 
   return (
-    isSkuExists
+    isIconExists
       ? (
         <select
           className={`select ${className}`}
           name="select-icon"
           data-name="icon"
-          data-product-id={product.id}
-          value={product.skuId}
+          data-type-id={typeId}
+          value={defaultValue}
           onChange={onChange}
         >
-          {options.map((item) => (
+          {icons.map((icon) => (
             <option
-              key={item.skuId}
-              value={item.skuId}
+              key={icon.id}
+              value={icon.id}
             >
-              {item.label}
+              <Icon
+                className="select_icon"
+                color={icon.color}
+                icon={icon.icon}
+                id={icon.id}
+              />
             </option>
           ))}
         </select>
@@ -36,19 +44,17 @@ const SelectSku = ({
   );
 };
 
-SelectSku.propTypes = {
+SelectIcon.propTypes = {
   className: PropTypes.string,
-  product: PropTypes.oneOfType([
+  icons: PropTypes.oneOfType([
     PropTypes.object,
   ]).isRequired,
-  options: PropTypes.oneOfType([
-    PropTypes.array,
-  ]).isRequired,
-  onChange: PropTypes.func.isRequired,
+  typeId: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
-SelectSku.defaultProps = {
+SelectIcon.defaultProps = {
   className: '',
 };
 
-export default SelectSku;
+export default SelectIcon;

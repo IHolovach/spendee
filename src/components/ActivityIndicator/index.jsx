@@ -13,7 +13,6 @@ const ActivityIndicator = ({ isLoading }) => (
     : null
 );
 
-
 ActivityIndicator.propTypes = {
   isLoading: PropTypes.bool.isRequired,
 };

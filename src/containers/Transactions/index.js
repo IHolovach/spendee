@@ -2,12 +2,13 @@ import React from 'react';
 
 import useAsyncTransactions from '../../hooks/useAsyncTransactions';
 import useAsyncStaticData from '../../hooks/useAsyncStaticData';
-import Transactions from '../../components/List';
-import CartContainer from '../../container-components/Cart';
+import TransactionsContainer from '../../container-components/Transactions';
+import AddTransactionBtn from './AddTransactionBtn';
+import TransactionList from './TransactionList';
 
 import './style.css';
 
-const Cart = () => {
+const Transactions = () => {
   const isTransactionsLoading = useAsyncTransactions();
   const isStaticDataLoading = useAsyncStaticData();
 
@@ -16,19 +17,13 @@ const Cart = () => {
   return (
     <TransactionsContainer>
       {containerProps => (
-        <Transactions
-          className="cart"
-          listTitle="Cart"
-          products={containerProps.products}
-          sku={containerProps.sku}
-          total={containerProps.total}
-          onQuantityChange={containerProps.onQuantityChange}
-          onDeleteItem={containerProps.onDeleteItem}
-          onChangeSku={containerProps.onChangeSku}
-        />
+        <div className="transactions">
+          <AddTransactionBtn onClick={containerProps.addTransactionModal} />
+          <TransactionList transactions={containerProps.transactions} />
+        </div>
       )}
     </TransactionsContainer>
   );
 };
 
-export default Cart;
+export default Transactions;

@@ -1,0 +1,24 @@
+{
+    "extends": "airbnb",
+    "rules": {
+        "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+        "class-methods-use-this": ["error", { "exceptMethods": ["keyExtractor"] }],
+        "global-require": "off",
+        "arrow-parens":"off",
+        "function-paren-newline": ["error", "consistent"],
+        "no-mixed-operators": "off",
+        "linebreak-style": 0,
+        "eslint linebreak-style": [0, "error", "windows"]
+    },
+    "globals": {
+        "jest": false,
+        "describe": false,
+        "it": false,
+        "beforeEach": false,
+        "afterEach":false,
+        "expect": false,
+        "fetch": false,
+        "DEV": false
+    },
+    "parser": "babel-eslint"
+}

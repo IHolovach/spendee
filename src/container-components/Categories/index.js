@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 
+import { setModal } from '../../store/actions/modal';
+
 class CategoriesContainer extends Component {
   state = {
     categories: [],
@@ -15,8 +17,13 @@ class CategoriesContainer extends Component {
   componentDidMount() {
     const {
       currency,
-      categories,
+      incomeCategories,
+      expenseCategories,
     } = this.props;
+    const categories = {
+      ...incomeCategories,
+      ...expenseCategories,
+    };
 
     this.setState({
       currency: Object.keys(currency)[0],
@@ -24,28 +31,32 @@ class CategoriesContainer extends Component {
     });
   }
 
-  onCheckboxChange = (id) => {
-    const { products } = this.state;
-    let total = 0;
-
-    products.map(product => {
-      total += product.price;
-      return total;
-    });
-
-    this.setState({ total });
+  onCheckboxChange = () => {
+    // todo: add feature
   };
 
   onEdit = (data, event) => {
     const { categories } = this.state;
     const categoryId = event.currentTarget.dataset.id;
+    const updatedCategories = categories.map(category => {
+      if (category.id === categoryId) {
+        const updatedCategory = {
+          id: categoryId,
+          ...category,
+          ...data,
+        };
 
+        category = updatedCategory;
+      }
+      return category;
+    });
 
     this.setState({ categories: updatedCategories });
   };
 
   onVisibilityChange = (event) => {
     const { categories } = this.state;
+    const { value } = event.currentTarget;
     const categoryId = event.currentTarget.dataset.id;
     const updatedCategories = categories.map(category => {
       if (category.id === categoryId) {
@@ -65,88 +76,38 @@ class CategoriesContainer extends Component {
     this.setState({ categories: updatedCategories });
   };
 
-  calculateTotal = () => {
-    const { products } = this.state;
-    let total = 0;
-
-    products.map(product => {
-      total += product.price;
-      return total;
-    });
-
-    this.setState({ total });
-  };
-
-  onQuantityChange = (newQuantity, productId) => {
-    const { products } = this.state;
-
-    const updatedProducts = products.map(product => {
-      if (product.id === productId) {
-        product.quantity = newQuantity;
-        product.price = newQuantity * product.originalPrice;
-      }
-      return product;
-    });
-
-    this.setState({ products: updatedProducts }, () => this.calculateTotal());
-  };
-
-  onDeleteItem = (event) => {
-    const { products } = this.state;
-    const productId = event.currentTarget.dataset.id;
-    const updatedProducts = products.filter(product => product.id !== productId);
-
-    this.setState({ products: updatedProducts }, () => this.calculateTotal());
-  };
-
-  onChangeSku = (event) => {
-    const skuId = event.currentTarget.value;
-    const { productId } = event.currentTarget.dataset;
-    const {
-      products,
-      sku,
-    } = this.state;
-
-    // todo: set min and max values for product
-    const [selectedSku] = sku.filter(item => item.skuId === skuId);
-
-    const updatedProducts = products.map(product => {
-      const price = selectedSku.originalPrice;
-
-      if (product.id === productId) {
-        product.originalPrice = price;
-        product.price = +product.quantity * +price;
-        product.skuId = selectedSku.skuId;
-      }
-      return product;
-    });
-
-    this.setState({ products: updatedProducts }, () => this.calculateTotal());
-  };
-
   render() {
-    const { children } = this.props;
+    const { children, ...rest } = this.props;
 
     return children({
       ...this.state,
-      onQuantityChange: this.onQuantityChange,
-      calculateTotal: this.calculateTotal,
-      onDeleteItem: this.onDeleteItem,
-      onChangeSku: this.onChangeSku,
+      ...rest,
+      onCheckboxChange: this.onCheckboxChange,
+      onEdit: this.onEdit,
+      onVisibilityChange: this.onVisibilityChange,
+      onDelete: this.onDelete,
     });
   }
 }
 
 const mapStateToProps = (state) => ({
-  transactions: state.products.list,
+  incomeCategories: state.categories.incomeCategories,
+  expenseCategories: state.categories.expenseCategories,
   currency: state.config.currency,
 });
 
-TransactionsContainer.propTypes = {
+const mapDispatchToProps = {
+  onSetModal: setModal,
+};
+
+CategoriesContainer.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.any,
   ]).isRequired,
-  transactions: PropTypes.oneOfType([
+  incomeCategories: PropTypes.oneOfType([
+    PropTypes.array,
+  ]).isRequired,
+  expenseCategories: PropTypes.oneOfType([
     PropTypes.array,
   ]).isRequired,
   currency: PropTypes.oneOfType([
@@ -155,7 +116,7 @@ TransactionsContainer.propTypes = {
 };
 
 const enhance = compose(
-  connect(mapStateToProps, null),
+  connect(mapStateToProps, mapDispatchToProps),
 );
 
 export default enhance(CategoriesContainer);
